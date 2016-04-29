@@ -24,7 +24,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ExpressionConverter.h">
+    <ClInclude Include="..\NonPolishNotation\ExpressionConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NonPolishNotation.cpp">
+    <ClCompile Include="ExpressionConverterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExpressionConverter.cpp">
+    <ClCompile Include="..\NonPolishNotation\ExpressionConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

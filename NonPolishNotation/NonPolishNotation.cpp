@@ -1,11 +1,9 @@
-// NonPolishNotation.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
-
+#include "ExpressionConverter.h"
 
 int main()
 {
-    return 0;
+	CExpressionConverter conv;
+	std::cout << conv.ToSuffixNotation("(2.4 + 10) * ((1) + 2)");
+	return 0;
 }
-
