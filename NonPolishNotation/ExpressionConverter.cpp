@@ -5,20 +5,23 @@ std::string CExpressionConverter::ToSuffixNotation(const std::string & expressio
 {
 	std::stack<char> operationStack;
 	std::string convertedExpression;
+	bool isSpaceAgain = false;
 
 	for (auto chr : expression)
 	{
 		if (isdigit(chr) || chr == '.')
 		{
 			convertedExpression += chr;
+			isSpaceAgain = false;
 			continue;
 		}
 
 		if (chr == ' ')
 		{
-			if (*(convertedExpression.end() - 1) != ' ')
+			if (!isSpaceAgain && !convertedExpression.empty())
 			{
-				convertedExpression += chr;
+				convertedExpression += ' ';
+				isSpaceAgain = true;
 			}
 			continue;
 		}
@@ -34,9 +37,7 @@ std::string CExpressionConverter::ToSuffixNotation(const std::string & expressio
 			{
 				while (expOperator <= GetOperatorType(operationStack.top()))
 				{
-					convertedExpression += ' ';
-					convertedExpression += operationStack.top();
-					operationStack.pop();
+					AddOperatorToExpressionFromStack(convertedExpression, operationStack);
 				}
 			}
 			operationStack.push(chr);
@@ -47,7 +48,10 @@ std::string CExpressionConverter::ToSuffixNotation(const std::string & expressio
 			operationStack.pop();
 			while (GetOperatorType(chr) != Operators::Braket)
 			{
-				convertedExpression += ' ';
+				if (*(convertedExpression.end() - 1) != ' ')
+				{
+					convertedExpression += ' ';
+				}
 				convertedExpression += chr;
 				chr = operationStack.top();
 				operationStack.pop();
@@ -57,25 +61,8 @@ std::string CExpressionConverter::ToSuffixNotation(const std::string & expressio
 
 	while (!operationStack.empty())
 	{
-		convertedExpression += ' ';
-		convertedExpression += operationStack.top();
-		operationStack.pop();
+		AddOperatorToExpressionFromStack(convertedExpression, operationStack);
 	}
 
 	return convertedExpression;
-}
-
-Operators CExpressionConverter::GetOperatorType(const char & chr) const
-{
-	switch (chr)
-	{
-	case '(':
-		return Operators::Braket;
-	case '+': case '-':
-		return Operators::PlusMinus;
-	case '*': case '/':
-		return Operators::Multiply;
-	default:
-		return Operators::None;
-	}
 }
